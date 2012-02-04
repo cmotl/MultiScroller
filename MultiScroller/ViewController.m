@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "MultiScrollViewViewController.h"
 
 @implementation ViewController
 
@@ -15,8 +16,10 @@
 #define PADDING  10
 
 - (CGRect)frameForPagingScrollView {
-    CGRect frame = [[UIScreen mainScreen] bounds];
+    //CGRect frame = [[UIScreen mainScreen] bounds];
+    CGRect frame = self.view.frame;
     frame.origin.x -= PADDING;
+    frame.size.width += (2 * PADDING);
     return frame;
 }
 
@@ -41,73 +44,33 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    MultiScrollViewViewController *internalScrollView1 = [[MultiScrollViewViewController alloc] init];
+    internalScrollView1.view.frame = [self frameForPageAtIndex:0];
+    internalScrollView1.image = [UIImage imageNamed:@"sexy_beast.png"];
+
+    MultiScrollViewViewController *internalScrollView2 = [[MultiScrollViewViewController alloc] init];
+    internalScrollView2.view.frame = [self frameForPageAtIndex:1];
+    internalScrollView2.image = [UIImage imageNamed:@"nailed_it.jpg"];
     
-    UIScrollView *internalScrollView1 = [[UIScrollView alloc] init];
-    internalScrollView1.frame = [self frameForPageAtIndex:0];
+    MultiScrollViewViewController *internalScrollView3 = [[MultiScrollViewViewController alloc] init];
+    internalScrollView3.view.frame = [self frameForPageAtIndex:2];
+    internalScrollView3.image = [UIImage imageNamed:@"honey_badger.jpg"];
     
-    UIScrollView *internalScrollView2 = [[UIScrollView alloc] init];
-    internalScrollView2.frame = [self frameForPageAtIndex:1];
+    self.scrollView.frame = [self frameForPagingScrollView];
     
-    UIScrollView *internalScrollView3 = [[UIScrollView alloc] init];
-    internalScrollView3.frame = [self frameForPageAtIndex:2];
+    [self addChildViewController:internalScrollView1];
+    [self.scrollView addSubview:internalScrollView1.view];
+
+    [self addChildViewController:internalScrollView2];
+    [self.scrollView addSubview:internalScrollView2.view];
     
-    
-    CGRect frame;
-    frame.origin.x = 0;
-    frame.origin.y = 10;
-    frame.size = self.scrollView.frame.size;
-    frame.size.height -= 20;
-    frame.size.width = 500.0f;
-    
-    UIView *subview1 = [[UIView alloc] initWithFrame:frame];
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = subview1.bounds;
-    gradient.startPoint = CGPointMake(0, 0.5);
-    gradient.endPoint = CGPointMake(1.0, 0.5);
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor redColor] CGColor], (id)[[UIColor whiteColor] CGColor], nil];
-    [subview1.layer insertSublayer:gradient atIndex:0];
-    internalScrollView1.contentSize = frame.size;
-    
-    frame.origin.x = 0;
-    frame.origin.y = 10;
-    frame.size = self.scrollView.frame.size;
-    frame.size.height -= 20;
-    frame.size.width = 200.0f;
-    
-    UIView *subview2 = [[UIView alloc] initWithFrame:frame];
-    gradient = [CAGradientLayer layer];
-    gradient.startPoint = CGPointMake(0, 0.5);
-    gradient.endPoint = CGPointMake(1.0, 0.5);
-    gradient.frame = subview2.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor greenColor] CGColor], (id)[[UIColor whiteColor] CGColor], nil];
-    [subview2.layer insertSublayer:gradient atIndex:0];
-    internalScrollView2.contentSize = frame.size;
-    
-    frame.origin.x = 0;
-    frame.origin.y = 10;
-    frame.size = self.scrollView.frame.size;
-    frame.size.height -= 20;
-    frame.size.width = 100.0f;
-    
-    UIView *subview3 = [[UIView alloc] initWithFrame:frame];
-    gradient = [CAGradientLayer layer];
-    gradient.startPoint = CGPointMake(0, 0.5);
-    gradient.endPoint = CGPointMake(1.0, 0.5);
-    gradient.frame = subview3.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor blueColor] CGColor], (id)[[UIColor whiteColor] CGColor], nil];
-    [subview3.layer insertSublayer:gradient atIndex:0];
-    internalScrollView3.contentSize = frame.size;
-    
-    
-    [internalScrollView1 addSubview:subview1];
-    [internalScrollView2 addSubview:subview2];
-    [internalScrollView3 addSubview:subview3];
-    
-    [self.scrollView addSubview:internalScrollView1];
-    [self.scrollView addSubview:internalScrollView2];
-    [self.scrollView addSubview:internalScrollView3];
+    [self addChildViewController:internalScrollView3];
+    [self.scrollView addSubview:internalScrollView3.view];
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * 3, self.scrollView.frame.size.height);
+    
+    UIColor *backgroundPattern = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"linen.png"]];
+    self.view.backgroundColor = backgroundPattern;
 }
 
 - (void)viewDidUnload
