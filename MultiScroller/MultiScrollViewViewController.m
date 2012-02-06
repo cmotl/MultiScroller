@@ -82,7 +82,7 @@
     scrollView.contentSize = CGSizeMake(imageView.frame.size.width, imageView.frame.size.height);
 	scrollView.maximumZoomScale = 3.0;
 	scrollView.minimumZoomScale = .5f;
-	scrollView.clipsToBounds = YES;    
+	//scrollView.clipsToBounds = YES;    
     
     //set offsets before insets
     [self setScrollOffsets];
